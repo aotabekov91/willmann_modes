@@ -17,7 +17,9 @@ cd willmann_modes/modes/keyboard
 pip install -r requirements.txt
 
 # Copy the mode to the willman modes folder
-cp -r willmann_modes/modes/keyboard willmann/modes
+# Assuming the willmann folder is given by $WILLMANN
+cd .. 
+cp -r keyboard $WILLMANN/modes
 
 # Reload willmann
 killall willmann
