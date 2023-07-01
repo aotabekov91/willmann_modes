@@ -4,6 +4,20 @@ Here I will collect (almost) all modes for [willmann](https://github.com/aotabek
 
 ## Install
 
+To install, for example, a mode of keyboard.
+
+```bash
+# Copy all modes
+mkdir tmp_willmann_modes
+cd tmp_willmann_modes
+git clone https://github.com/aotabekov91/willmann_modes
+
+cd willmann_modes/modes/keyboard
+pip install -r requirements
+
+cp -r willmann_modes/modes/keyboard willmann/modes
+```
+
 ## Usage
 
 ### Run an application
