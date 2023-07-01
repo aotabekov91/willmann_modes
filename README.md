@@ -8,8 +8,8 @@ To install, for example, a mode of keyboard.
 
 ```bash
 # Copy all modes
-mkdir tmp_willmann_modes
-cd tmp_willmann_modes
+mkdir modes
+cd modes
 git clone https://github.com/aotabekov91/willmann_modes
 
 cd willmann_modes/modes/keyboard
