@@ -4,9 +4,9 @@ import asyncio
 import subprocess
 
 from tables import Bookmark
-from plugin.app.mode import AppMode 
 
 from plugin.app import register
+from plugin.app.mode import AppMode 
 from plugin.widget import LeftRightEdit, InputListStack, InputList
 
 class BookmarkMode(AppMode):

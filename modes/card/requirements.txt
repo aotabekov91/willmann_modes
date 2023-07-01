@@ -1,0 +1,3 @@
+plyer==2.1.0
+plugin==0.0.1
+ankipulator==0.0.1
