@@ -18,6 +18,10 @@ pip install -r requirements
 
 # Copy the mode to the willman modes folder
 cp -r willmann_modes/modes/keyboard willmann/modes
+
+# Reload willmann
+killall willmann
+python willmann/run.py
 ```
 
 ## Usage
