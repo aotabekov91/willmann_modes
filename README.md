@@ -13,8 +13,10 @@ cd tmp_willmann_modes
 git clone https://github.com/aotabekov91/willmann_modes
 
 cd willmann_modes/modes/keyboard
+# Install required packages for the mode
 pip install -r requirements
 
+# Copy the mode to the willman modes folder
 cp -r willmann_modes/modes/keyboard willmann/modes
 ```
 
