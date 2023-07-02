@@ -41,11 +41,13 @@ class LookupMode(AppMode):
 
         self.ui.main.returnPressed.connect(self.confirm)
         self.ui.main.inputTextChanged.connect(self.on_inputTextChanged)
-
         self.ui.addWidget(ListWidget(item_widget=Icon), 'icon')
-
         self.ui.hideWanted.connect(self.deactivate)
         self.ui.installEventFilter(self)
+
+        self.ui.setMaximumSize(600, 700)
+        self.ui.setMinimumSize(600, 700)
+        self.ui.setLocation('center')
 
     def on_inputTextChanged(self):
 

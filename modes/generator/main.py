@@ -30,8 +30,11 @@ class GeneratorMode(AppMode):
         self.ui=InputListStack()
         self.ui.main.input.setLabel('Generate')
         self.ui.main.returnPressed.connect(self.confirm)
-
         self.ui.installEventFilter(self)
+
+        self.ui.setMaximumSize(600, 700)
+        self.ui.setMinimumSize(600, 700)
+        self.ui.setLocation('center')
 
     def setConnection(self):
 

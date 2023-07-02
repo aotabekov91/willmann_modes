@@ -1,9 +1,8 @@
 import subprocess
-
-from plugin.app.mode import AppMode
 from tables import Bookmark, Metadata, Part
 
 from plugin.app import register
+from plugin.app.mode import AppMode
 from plugin.widget import InputListStack, InputList
 
 class SearchMode(AppMode):
@@ -43,6 +42,10 @@ class SearchMode(AppMode):
 
         self.ui.hideWanted.connect(self.deactivate)
         self.ui.installEventFilter(self)
+
+        self.ui.setMaximumSize(600, 700)
+        self.ui.setMinimumSize(600, 700)
+        self.ui.setLocation('center')
 
     @register('b')
     def toggleBookmarks(self):

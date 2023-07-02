@@ -41,6 +41,9 @@ class BookmarkMode(AppMode):
         self.ui.browser.input.setLabel('Browser')
         self.ui.browser.returnPressed.connect(self.on_browserConfirm)
 
+        self.ui.setMaximumSize(600, 700)
+        self.ui.setMinimumSize(600, 700)
+        self.ui.setLocation('center')
         self.ui.installEventFilter(self)
 
     def on_searchInputConfirm(self):

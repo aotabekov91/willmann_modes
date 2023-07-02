@@ -1,6 +1,6 @@
 import re
-import urllib.request
 import urllib.parse
+import urllib.request
 import fake_useragent
 
 from plugin.app import register
@@ -40,8 +40,11 @@ class TranslatorMode(AppMode):
         self.ui.hideWanted.connect(self.deactivate)
         self.ui.main.returnPressed.connect(self.confirm)
         self.ui.main.inputTextChanged.connect(self.on_inputTextChanged)
-
         self.ui.installEventFilter(self)
+
+        self.ui.setMaximumSize(600, 700)
+        self.ui.setMinimumSize(600, 700)
+        self.ui.setLocation('center')
 
     def on_inputTextChanged(self):
 

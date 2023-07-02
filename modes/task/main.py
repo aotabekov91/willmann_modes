@@ -153,10 +153,12 @@ class TaskMode(AppMode):
         self.ui.addWidget(InputList(item_widget=LeftRightEdit), 'task', main=True)
         self.ui.task.input.setLabel('Task')
         self.ui.task.returnPressed.connect(self.start)
-        
         self.ui.addWidget(ListWidget(), 'status')
-
         self.ui.installEventFilter(self)
+
+        self.ui.setMaximumSize(600, 700)
+        self.ui.setMinimumSize(600, 700)
+        self.ui.setLocation('center')
 
     @register('a')
     def activate(self, task_data={}):

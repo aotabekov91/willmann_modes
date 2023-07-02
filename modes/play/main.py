@@ -7,10 +7,9 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 
+from plugin.app.mode import AppMode
 from plugin.widget import InputListStack
 from plugin.app import register, os_command
-
-from plugin.app.mode import AppMode
 
 class PlayerMode(AppMode):
 
@@ -30,8 +29,11 @@ class PlayerMode(AppMode):
         self.ui.main.input.setLabel('Player')
         self.ui.hideWanted.connect(self.deactivate)
         self.ui.main.returnPressed.connect(self.confirm)
-
         self.ui.installEventFilter(self)
+
+        self.ui.setMaximumSize(600, 700)
+        self.ui.setMinimumSize(600, 700)
+        self.ui.setLocation('center')
 
     def getPlayerList(self):
 

@@ -71,6 +71,10 @@ class WikiMode(AppMode):
         self.ui.hideWanted.connect(self.deactivate)
         self.ui.installEventFilter(self)
 
+        self.ui.setMaximumSize(600, 700)
+        self.ui.setMinimumSize(600, 700)
+        self.ui.setLocation('center')
+
     def on_mindmapInputTextChanged(self): pass
 
     def on_networkInputTextChanged(self):
