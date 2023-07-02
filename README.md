@@ -1,6 +1,6 @@
 # Willmann modes
 
-Here I will collect (almost) all modes for [willmann](https://github.com/aotabekov91/willmann).
+Here all modes will be collected for [willmann](https://github.com/aotabekov91/willmann).
 
 ## Install
 
@@ -8,8 +8,8 @@ To install, for example, a mode of keyboard.
 
 ```bash
 # Copy all modes
-mkdir modes
-cd modes
+mkdir /tmp/modes
+cd /tmp/modes
 git clone https://github.com/aotabekov91/willmann_modes
 
 cd willmann_modes/modes/keyboard
@@ -17,13 +17,12 @@ cd willmann_modes/modes/keyboard
 pip install -r requirements.txt
 
 # Copy the mode to the willman modes folder
-# Assuming the willmann folder is given by $WILLMANN
 cd .. 
-cp -r keyboard $WILLMANN/modes
+cp -r keyboard $HOME/.config/willmann/modes
 
 # Reload willmann
 killall willmann
-python willmann/run.py
+willmann
 ```
 
 ## Usage
