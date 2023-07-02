@@ -5,13 +5,11 @@ import subprocess
 import playsound
 from plyer import notification
 
-from plugin.app.mode import AppMode
-
 from plugin.app import register
+from plugin.app.mode import AppMode
 from plugin.widget import InputListStack, ListWidget, Icon
 
-from ankipulator import Submitter
-from translate import en_translation, de_translation
+from .translate import en_translation, de_translation
 
 class LookupMode(AppMode):
 
@@ -24,10 +22,18 @@ class LookupMode(AppMode):
 
         self.word=None
         self.notes=None
-        self.submitter=Submitter()
+        self.submitter=None
 
         self.setUI()
         self.setLan('en')
+
+    def setSettings(self):
+
+        super().setSettings()
+
+        if self.submit_to_anki:
+            from ankipulator import Submitter
+            self.submitter=Submitter()
 
     def setUI(self):
 
@@ -88,7 +94,7 @@ class LookupMode(AppMode):
                 self.submitter.addNotes(self.notes)
                 notification.notify(title='LookupMode', message='Submitted to Anki')
             except:
-                notification.notify(title='LookupMode', message='Could not be submitted to Anki')
+                notification.notify(title='LookupMode', message='Could not submit to Anki')
 
     @register('r')
     def refresh(self): self.setData(self.notes)
@@ -213,14 +219,7 @@ class LookupMode(AppMode):
                 for f in sounds_list:
                     if 'Meaning_s' in f['fields']: return f['path']
 
-    def toggle(self):
-
-        if not self.ui.isVisible():
-            self.activate()
-        else:
-            self.deactivate()
-
 if __name__ == '__main__':
-    app = LookupMode(port=33333, parent_port=9999)
+    app = LookupMode(port=33333)
     app.toggle()
     app.run()
