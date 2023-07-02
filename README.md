@@ -4,7 +4,7 @@ Here all modes will be collected for [willmann](https://github.com/aotabekov91/w
 
 ## Install
 
-To install, for example, a mode of keyboard.
+To install, for example, a keyboard mode.
 
 ```bash
 # Copy all modes
@@ -19,6 +19,9 @@ pip install -r requirements.txt
 # Copy the mode to the willman modes folder
 cd .. 
 cp -r keyboard $HOME/.config/willmann/modes
+
+# Remove temporary files
+rm -rf /tmp/modes
 
 # Reload willmann
 killall willmann
