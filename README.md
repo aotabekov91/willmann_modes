@@ -23,6 +23,10 @@ cp -r keyboard $HOME/.config/willmann/modes
 # Remove temporary files
 rm -rf /tmp/modes
 
+# !Enable keyboard mode
+# vim $HOME/.config/willmann/config.ini
+# modes_include= ..., keyboard
+
 # Reload willmann
 killall willmann
 willmann
