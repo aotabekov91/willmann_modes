@@ -5,6 +5,8 @@ import subprocess
 import playsound
 from plyer import notification
 
+from ankipulator import Submitter
+
 from plugin.app import register
 from plugin.app.mode import AppMode
 from plugin.widget import InputListStack, ListWidget, Icon
@@ -26,14 +28,7 @@ class LookupMode(AppMode):
 
         self.setUI()
         self.setLan('en')
-
-    def setSettings(self):
-
-        super().setSettings()
-
-        if self.submit_to_anki:
-            from ankipulator import Submitter
-            self.submitter=Submitter()
+        self.submitter=Submitter()
 
     def setUI(self):
 
@@ -95,6 +90,7 @@ class LookupMode(AppMode):
             try:
                 self.submitter.addNotes(self.notes)
                 notification.notify(title='LookupMode', message='Submitted to Anki')
+
             except:
                 notification.notify(title='LookupMode', message='Could not submit to Anki')
 

@@ -16,8 +16,8 @@ from plugin.app import register
 from plugin.app.mode import AppMode 
 from plugin.widget import InputListStack, InputList
 
-from .widget_network import Network
-from .widget_mindmap import Mindmap
+from .network import Network
+from .mindmap import Mindmap
 
 class WikiMode(AppMode):
 
@@ -34,6 +34,11 @@ class WikiMode(AppMode):
 
         self.setTodos()
         self.setWikis()
+
+    def setSettings(self):
+
+        super().setSettings()
+        self.wiki_folder=os.path.expanduser(self.wiki_folder)
 
     def setUI(self):
 
@@ -179,10 +184,16 @@ class WikiMode(AppMode):
     def toggleGraph(self): 
 
         if self.network.isVisible():
+            # self.ui.setMaximumSize(600, 700)
+            # self.ui.setMinimumSize(600, 700)
+            # self.ui.setLocation('center')
             self.ui.show()
         else:
             text=self.ui.main.input.text()
             self.network.input.setText(text)
+            # self.ui.setMaximumSize(500, 500)
+            # self.ui.setMinimumSize(500, 500)
+            # self.ui.setLocation('center')
             self.ui.show(self.network)
 
     @register('t')

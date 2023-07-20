@@ -22,8 +22,13 @@ class ApplicationsMode(AppMode):
         self.manager=asyncio.run(Connection().connect())
 
         self.setUI()
+
+    def activate(self):
+
         self.applications=self.getApplications()
         self.ui.main.setList(self.applications)
+
+        super().activate()
 
     def setUI(self):
 

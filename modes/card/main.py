@@ -1,11 +1,9 @@
-import os
-
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 
 from plyer import notification
-from flashcard import Submitter
+from ankipulator import Submitter
 
 from plugin.app.mode import AppMode
 
@@ -87,8 +85,8 @@ class CardMode(AppMode):
     @register('s')
     def createShortcut(self):
 
-        self.deck='shortcut'
-        self.model='Shortcut'
+        self.deck='question'
+        self.model='Question'
         self.construct()
 
     @register('t')
@@ -128,10 +126,7 @@ class CardMode(AppMode):
         self.ui.main.input.setLabel('Flashcard')
         self.ui.show(self.ui.main)
         if self.model:
-            if not preserve:
-                flds=self.fields[self.model]
-                data=[{'left':f, 'right':''} for f in flds]
-                self.ui.main.setList(data)
+            if not preserve: self.clear()
         else:
             self.showModels()
 
@@ -152,9 +147,17 @@ class CardMode(AppMode):
 
             self.submitter.addNotes(note)
             notification.notify(title='LookupMode', message='Submitted to Anki')
+            self.clear()
+            self.ui.main.setFocus()
 
         except:
             notification.notify(title='LookupMode', message='Could not be submitted to Anki')
+
+    def clear(self):
+
+        flds=self.fields[self.model]
+        data=[{'left':f, 'right':''} for f in flds]
+        self.ui.main.setList(data)
 
     def confirm(self):
 
