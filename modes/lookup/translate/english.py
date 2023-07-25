@@ -2,12 +2,14 @@ import re
 from .components import save, synthesize, get_soup
 
 def get_definition(word):
+
     if len(word.split(' '))==1:
         return get_word_definition(word)
     else:
         return get_phrase_definition(word)
 
 def get_phrase_definition(word):
+
     phrase=word.replace(' ', '-')
     url = f'https://dictionary.cambridge.org/us/dictionary/english/{phrase}'
     soup=get_soup(url)
@@ -194,6 +196,7 @@ def get_word_definition(word):
     return notes
 
 def get_anki_notes(word, deck_folder='english::daily', model_folder='Definition', **kwargs):
+
     run=[]
     anki_notes=[]
     notes=get_definition(word)
