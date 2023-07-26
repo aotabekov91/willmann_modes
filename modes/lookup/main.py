@@ -34,7 +34,7 @@ class LookupMode(AppMode):
 
         self.ui=InputListStack()
 
-        self.ui.main.returnPressed.connect(self.confirm)
+        self.ui.main.returnPressed.connect(self.translate)
         self.ui.main.inputTextChanged.connect(self.on_inputTextChanged)
         self.ui.addWidget(ListWidget(item_widget=Icon), 'icon')
         self.ui.hideWanted.connect(self.deactivate)
@@ -64,13 +64,6 @@ class LookupMode(AppMode):
             self.lan=lan
             self.ui.main.input.setLabel(f'Word [{self.lan}]')
 
-    def getText(self, request):
-
-        text=super().getText(request)
-        self.ui.main.input.setText(text)
-        self.ui.show()
-        self.confirm()
-
     @register('i')
     def toggleIcon(self):
 
@@ -90,9 +83,10 @@ class LookupMode(AppMode):
             try:
                 self.submitter.addNotes(self.notes)
                 notification.notify(title='LookupMode', message='Submitted to Anki')
-
             except:
-                notification.notify(title='LookupMode', message='Could not submit to Anki')
+                notification.notify(title='LookupMode', 
+                                    message='Could not submit to Anki', 
+                                    timeout=0)
 
     @register('r')
     def refresh(self): self.setData(self.notes)
@@ -104,22 +98,30 @@ class LookupMode(AppMode):
         try:
             selection=p.stdout.readlines()[0].decode()
             self.ui.main.input.setText(selection)
-            self.confirm()
+            self.translate()
         except:
             pass
 
-    def lookupWord(self):
+    def lookupWord(self, request={}):
 
-        if self.lan=='en':
-            notes, run = en_translation(self.ui.main.input.text())
-        elif self.lan=='de':
-            notes, run = de_translation(self.ui.main.input.text())
+        lan=request.get('lan', self.lan)
+        term=request.get('term', self.ui.main.input.text())
+
+        if lan=='en':
+            notes, run = en_translation(term)
+        elif lan=='de':
+            notes, run = de_translation(term)
+
         for r in run: self.gsocket.send_json(r)
+
         return notes
 
-    def confirm(self):
+    def translate(self, request={}):
 
-        self.notes=self.lookupWord()
+        self.notes=self.lookupWord(request)
+
+        if not self.ui.isVisible(): self.ui.show()
+
         if self.notes:
             self.setLabel(self.notes)
             self.setData(self.notes)
@@ -134,7 +136,6 @@ class LookupMode(AppMode):
 
         if notes:
             word=notes[0]['fields']['Word']
-            sound=notes[0]['fields']['Word']
             ipa=notes[0]['fields']['IPA']
             gender=notes[0]['fields'].get('Gender', '')
             plural=notes[0]['fields'].get('Plural', '')
@@ -216,6 +217,8 @@ class LookupMode(AppMode):
             elif kind=='meaning':
                 for f in sounds_list:
                     if 'Meaning_s' in f['fields']: return f['path']
+
+
 
 if __name__ == '__main__':
     app = LookupMode(port=33333)

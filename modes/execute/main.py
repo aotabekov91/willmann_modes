@@ -1,5 +1,6 @@
 import os
 
+from plugin.app import register
 from plugin.app.mode import AppMode
 from plugin.widget import InputListStack
 
@@ -13,6 +14,7 @@ class ExecuteMode(AppMode):
                  parent_port=parent_port, 
                  config=config)
 
+        self.last_command=None
         self.setUI()
 
     def setUI(self):
@@ -33,9 +35,15 @@ class ExecuteMode(AppMode):
         text=self.ui.main.input.text()
         self.ui.main.setList([{'up': 'Execute bash command', 'down' :text}])
 
+    @register('l')
+    def runLastCommand(self):
+
+        if self.last_command: os.popen(self.last_command)
+
     def confirm(self):
 
         text=self.ui.main.input.text()
+        self.last_command=text
         if text:
             self.ui.main.clear()
             os.popen(text)

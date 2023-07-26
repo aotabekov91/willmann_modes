@@ -80,14 +80,14 @@ class CardMode(AppMode):
                 data=[{'left':f, 'right':''} for f in flds]
                 self.ui.main.setList(data)
             self.ui.anki.clear()
-            self.construct(preserve=True)
+            self.activate(preserve=True)
 
     @register('s')
     def createShortcut(self):
 
         self.deck='question'
         self.model='Question'
-        self.construct()
+        self.activate()
 
     @register('t')
     def toggleMain(self):
@@ -111,17 +111,8 @@ class CardMode(AppMode):
         self.ui.anki.setList(self.models)
         self.ui.show(self.ui.anki)
 
-    def activate(self): self.construct()
-
-    def toggle(self):
-
-        if self.ui.isVisible():
-            self.deactivate()
-        else:
-            self.activate()
-
     @register('c')
-    def construct(self, preserve=False):
+    def activate(self, preserve=False):
 
         self.ui.main.input.setLabel('Flashcard')
         self.ui.show(self.ui.main)
@@ -164,7 +155,7 @@ class CardMode(AppMode):
         if self.deck:
             if self.model:
                 self.submit(self.createNote())
-                self.construct()
+                self.activate()
         else:
             self.showDecks()
 
