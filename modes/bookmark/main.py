@@ -116,10 +116,8 @@ class BookmarkMode(AppMode):
         self.ui.main.setList(dlist)
         self.ui.show(self.ui.main)
 
-    def activate(self): self.paste()
-        
     @register('b')
-    def bookmark(self): self.chooseUrl(self.paste())
+    def bookmark(self): self.chooseUrl(self.activate())
 
     @register('s')
     def toggleSearch(self):
@@ -157,7 +155,7 @@ class BookmarkMode(AppMode):
         self.ui.show(self.ui.browser)
 
     @register('p')
-    def paste(self):
+    def activate(self):
 
         text=self.clipboard().text()
         dlist=[{'up': text}]
@@ -190,7 +188,7 @@ class BookmarkMode(AppMode):
                     self.manager.command(f'workspace {v.name}'))
             asyncio.run(focused.command('focus'))
 
-        self.paste()
+        self.activate()
 
 if __name__=='__main__':
     app=BookmarkMode(port=33333)

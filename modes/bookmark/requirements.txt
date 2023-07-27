@@ -1,3 +1,2 @@
-pdftotext
 plugin==0.0.1
 tables==0.0.1

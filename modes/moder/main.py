@@ -34,7 +34,7 @@ class Moder(AppMode):
             self.parent_socket.send_json(
                     {'command': 'setModeAction',
                      'mode':mode,
-                     'action': 'activate',
+                     'slots': {'action': 'activate'},
                      })
             self.parent_socket.recv_json()
 
