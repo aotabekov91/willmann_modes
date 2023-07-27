@@ -157,12 +157,12 @@ class BookmarkMode(AppMode):
     @register('p')
     def activate(self):
 
-        text=self.clipboard().text()
-        dlist=[{'up': text}]
-        self.ui.choose.setList(dlist)
         self.ui.show(self.ui.choose)
-
-        return text
+        text=self.clipboard().text()
+        if text:
+            dlist=[{'up': text}]
+            self.ui.choose.setList(dlist)
+            return text
 
     def yankUrl(self, window_id):
 
