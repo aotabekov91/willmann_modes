@@ -1,3 +1,4 @@
+import platform
 import subprocess
 
 from plugin.app.mode import AppMode
@@ -38,22 +39,30 @@ class CommandMode(AppMode):
 
     def setCommands(self):
 
-        def getArchCommands():
-            proc=subprocess.Popen(['pacman', '-Qe'], 
-                                  stdout=subprocess.PIPE,
-                                  stderr=subprocess.DEVNULL
-                                  )
-            commandlications=proc.stdout.readlines()
-            commands=[]
-            for command in commandlications:
-                info={}
+        if 'generic' in platform.release():
+            cmd=['dpkg-query', '--show', r'-f=${Package}___${binary:summary}\n']
+        else:
+            cmd=['pacman', '-Qe']
+
+        proc=subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
+        commandlications=proc.stdout.readlines()
+
+        commands=[]
+        for command in commandlications:
+            info={}
+            if 'generic' in platform.release():
+                command=command.decode().strip('\n').split('___')
+            else:
                 command=command.decode().strip('\n').split(' ')
-                command_name=command[0]
-                info['up']=command_name
-                info['id']=command_name
-                info['kind']='command'
+            name=command[0]
+            info['up']=name
+            info['id']=name
+            info['kind']='command'
+            if 'generic' in platform.release():
+                if len(command)>1: info['down']=command[1]
+            else:
                 try:
-                    proc=subprocess.Popen(['whatis', '-l',  command_name], 
+                    proc=subprocess.Popen(['whatis', '-l',  name], 
                                           stderr=subprocess.DEVNULL,
                                           stdout=subprocess.PIPE)
                     desc=proc.stdout.readline().decode()
@@ -61,12 +70,11 @@ class CommandMode(AppMode):
                     info['down']=desc
                 except:
                     info['down']=''
-                commands+=[info]
-            self.commands=commands
+            commands+=[info]
 
-        
-        getArchCommands()
+        self.commands=commands
         self.ui.main.setList(self.commands)
+
 
 if __name__=='__main__':
     app=CommandMode(port=33333)
