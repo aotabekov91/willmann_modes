@@ -1,11 +1,11 @@
 import subprocess
 from tables import Bookmark, Metadata, Part
 
-from plugin.app import register
-from plugin.app.mode import AppMode
-from plugin.widget import InputListStack, InputList
+from qapp.utils import register
+from qapp.plug import PlugApp
+from qapp.widget import InputListStack, InputList
 
-class SearchMode(AppMode):
+class SearchMode(PlugApp):
 
     def __init__(self, port=None, parent_port=None, config=None):
 

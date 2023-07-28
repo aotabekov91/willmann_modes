@@ -12,14 +12,14 @@ from PyQt5.QtWidgets import *
 
 from tables import WikiIndex
 
-from plugin.app import register
-from plugin.app.mode import AppMode 
-from plugin.widget import InputListStack, InputList
+from qapp.plug import PlugApp 
+from qapp.utils import register
+from qapp.widget import InputListStack, InputList
 
 from .network import Network
 from .mindmap import Mindmap
 
-class WikiMode(AppMode):
+class WikiMode(PlugApp):
 
     def __init__(self, port=None, parent_port=None, config=None):
 
@@ -31,7 +31,6 @@ class WikiMode(AppMode):
         self.index=WikiIndex()
 
         self.setUI()
-
         self.setTodos()
         self.setWikis()
 

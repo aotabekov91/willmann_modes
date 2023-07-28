@@ -5,13 +5,13 @@ from PyQt5.QtWidgets import *
 from plyer import notification
 from ankipulator import Submitter
 
-from plugin.app.mode import AppMode
+from qapp.plug import PlugApp
 
-from plugin.app import register
-from plugin.widget import LeftRightEdit
-from plugin.widget import InputListStack, InputList
+from qapp.utils import register
+from qapp.widget import LeftRightEdit
+from qapp.widget import InputListStack, InputList
 
-class CardMode(AppMode):
+class CardMode(PlugApp):
 
     def __init__(self, port=None, parent_port=None, config=None):
 

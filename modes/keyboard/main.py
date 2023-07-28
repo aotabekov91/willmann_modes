@@ -1,10 +1,11 @@
 import functools
 
-from plugin.app import os_command
-from plugin.app.mode import AppMode
-from plugin.widget import InputListStack
+from qapp.plug import PlugApp
 
-class KeyboardMode(AppMode):
+from plugin import command
+from qapp.widget import InputListStack
+
+class KeyboardMode(PlugApp):
 
     def __init__(self, port=None, parent_port=None, config=None):
 
@@ -37,7 +38,7 @@ class KeyboardMode(AppMode):
             setattr(self, k, func)
         self.ui.main.setList(self.keyboards)
 
-    @os_command()
+    @command()
     def confirm(self):
 
         self.deactivate()
@@ -46,7 +47,7 @@ class KeyboardMode(AppMode):
             lan=item.itemData.get('id', 'us')
             return f'setxkbmap {lan}' 
 
-    @os_command()
+    @command()
     def setKeyboard(self, lan):
 
         self.deactivate()

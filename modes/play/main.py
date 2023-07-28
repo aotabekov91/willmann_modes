@@ -1,17 +1,16 @@
-import os
-import sys
-
 import subprocess
 
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 
-from plugin.app.mode import AppMode
-from plugin.widget import InputListStack
-from plugin.app import register, os_command
+from plugin import command
 
-class PlayerMode(AppMode):
+from qapp.plug import PlugApp
+from qapp.utils import register
+from qapp.widget import InputListStack
+
+class PlayerMode(PlugApp):
 
     def __init__(self, port=None, parent_port=None, config=None):
 
@@ -82,42 +81,42 @@ class PlayerMode(AppMode):
         return ' '
 
     @register(Qt.Key_Space)
-    @os_command()
+    @command()
     def togglePlayPause(self):
 
         self.setPlayer()
         return f'playerctl {self.getCurrentPlayer()} play-pause'
 
     @register('h')
-    @os_command()
+    @command()
     def next(self):
 
         self.setPlayer()
         return f'playerctl {self.getCurrentPlayer()} next'
 
     @register('l')
-    @os_command()
+    @command()
     def previous(self):
 
         self.setPlayer()
         return f'playerctl {self.getCurrentPlayer()} previous'
 
     @register('i')
-    @os_command()
+    @command()
     def increaseVolume(self):
 
         self.setPlayer()
         return 'pactl set-sink-volume 0 +5%'
 
     @register('d')
-    @os_command()
+    @command()
     def decreaseVolume(self):
 
         self.setPlayer()
         return 'pactl set-sink-volume 0 -5%'
 
     @register('m')
-    @os_command()
+    @command()
     def mute(self):
 
         self.setPlayer()

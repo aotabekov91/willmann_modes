@@ -3,13 +3,14 @@ import urllib.parse
 import urllib.request
 import fake_useragent
 
-from plugin.app import register
-from plugin.widget import InputListStack
+from qapp.plug import PlugApp
+from qapp.utils import register
+from qapp.widget import InputListStack
 
-from plugin.app import os_command
-from plugin.app.mode import AppMode
+from plugin import command
 
 def translate(to_translate, to_language="auto", from_language="auto", wrap_len="80"):
+
     base_link = "http://translate.google.com/m?tl=%s&sl=%s&q=%s"
     to_translate = urllib.parse.quote(to_translate)
     link = base_link % (to_language, from_language, to_translate)
@@ -22,7 +23,7 @@ def translate(to_translate, to_language="auto", from_language="auto", wrap_len="
     re_result = re.findall(expr, data)
     if (len(re_result) > 0): return re_result[0]
 
-class TranslatorMode(AppMode):
+class TranslatorMode(PlugApp):
 
     def __init__(self, port=None, parent_port=None, config=None):
 

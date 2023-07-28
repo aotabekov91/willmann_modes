@@ -1,8 +1,7 @@
 import os
-import time
 import subprocess
 
-from plugin.widget import InputBrowser
+from qapp.widget import InputBrowser
 
 class Mindmap(InputBrowser):
 

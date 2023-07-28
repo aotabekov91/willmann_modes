@@ -5,10 +5,10 @@ import subprocess
 import libtmux
 from i3ipc.aio import Connection
 
-from plugin.app.mode import AppMode
-from plugin.widget import InputListStack
+from qapp.plug import PlugApp
+from qapp.widget import InputListStack
 
-class ApplicationsMode(AppMode):
+class ApplicationsMode(PlugApp):
 
     def __init__(self, port=None, parent_port=None, config=None):
 

@@ -3,13 +3,13 @@ import zmq
 import hashlib
 import playsound
 
-from plugin.app import register
-from plugin.widget import InputListStack
+from qapp.utils import register
+from qapp.widget import InputListStack
 
+from qapp.plug import PlugApp
 from tables import Joke, Quote
-from plugin.app.mode import AppMode
 
-class GeneratorMode(AppMode):
+class GeneratorMode(PlugApp):
 
     def __init__(self, port=None, parent_port=None, config=None):
 

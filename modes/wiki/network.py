@@ -1,4 +1,4 @@
-from plugin.widget import InputBrowser
+from qapp.widget import InputBrowser
 from pyvis.network import Network as Graph
 
 class Network(InputBrowser):

@@ -1,10 +1,10 @@
 import platform
 import subprocess
 
-from plugin.app.mode import AppMode
-from plugin.widget import InputListStack 
+from qapp.plug import PlugApp
+from qapp.widget import InputListStack 
 
-class CommandMode(AppMode):
+class CommandMode(PlugApp):
 
     def __init__(self, port=None, parent_port=None, config=None):
 

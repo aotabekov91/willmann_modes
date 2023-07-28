@@ -15,12 +15,12 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 
-from plugin.app import register
-from plugin.widget import LeftRightEdit
-from plugin.widget import CommandStack, InputList, ListWidget
+from qapp.utils import register
+from qapp.widget import LeftRightEdit
+from qapp.widget import CommandStack, InputList, ListWidget
 
-from plugin.app import os_command
-from plugin.app.mode import AppMode
+from plugin import command
+from qapp.plug import PlugApp
 
 class Timer(QObject):
 
@@ -120,7 +120,7 @@ class Timer(QObject):
         self.paused=False
         self.activated=False
 
-class TaskMode(AppMode):
+class TaskMode(PlugApp):
 
     def __init__(self, port=None, parent_port=None, config=None):
 

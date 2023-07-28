@@ -1,7 +1,7 @@
-from plugin.app.mode import AppMode
-from plugin.widget import InputListStack
+from qapp.plug import PlugApp
+from qapp.widget import InputListStack
 
-class Moder(AppMode):
+class Moder(PlugApp):
 
     def __init__(self, port=None, parent_port=None, config=None):
 
@@ -38,12 +38,9 @@ class Moder(AppMode):
                      })
             self.parent_socket.recv_json()
 
-    def update(self, request):
+    def update(self, modes=[]):
 
-        slots=request.get('slots', {})
-        modes=slots.get('modes', [])
-        if modes:
-            self.modes=[]
-            for name, data in modes.items():
-                if name!=self.__class__.__name__: self.modes+=[{'up':name, 'id':name}]
-            self.ui.main.setList(self.modes)
+        self.modes=[]
+        for name, data in modes.items():
+            if name!=self.__class__.__name__: self.modes+=[{'up':name, 'id':name}]
+        self.ui.main.setList(self.modes)
