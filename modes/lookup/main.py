@@ -11,7 +11,7 @@ from plugin.app import register
 from plugin.app.mode import AppMode
 from plugin.widget import InputListStack, ListWidget, Icon
 
-from .translate import en_translation, de_translation
+# from .translate import en_translation, de_translation
 
 class LookupMode(AppMode):
 
@@ -91,9 +91,8 @@ class LookupMode(AppMode):
     @register('r')
     def refresh(self): self.setData(self.notes)
 
-    @register('s')
-    def lookupSelection(self):
-
+    @register('y')
+    def yankSelected(self): 
         p=subprocess.Popen('xclip -o'.split(' '), stdout=subprocess.PIPE)
         try:
             selection=p.stdout.readlines()[0].decode()
