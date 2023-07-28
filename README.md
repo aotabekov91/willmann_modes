@@ -1,6 +1,7 @@
 # Willmann modes
 
-Here all modes will be collected for [willmann](https://github.com/aotabekov91/willmann).
+All modes for [willmann](https://github.com/aotabekov91/willmann) will be
+collected here.
 
 ## Install
 
