@@ -11,7 +11,7 @@ from plugin.app import register
 from plugin.app.mode import AppMode
 from plugin.widget import InputListStack, ListWidget, Icon
 
-# from .translate import en_translation, de_translation
+from .translate import en_translation, de_translation
 
 class LookupMode(AppMode):
 
