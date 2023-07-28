@@ -1,3 +1,4 @@
 i3ipc==2.2.1
+qapp==0.0.1
 plugin==0.0.1
 libtmux==0.15.1

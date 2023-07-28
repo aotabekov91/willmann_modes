@@ -1,3 +1,4 @@
 pyvis==0.3.2
+qapp==0.0.1
 plugin==0.0.1
 tables==0.0.1
