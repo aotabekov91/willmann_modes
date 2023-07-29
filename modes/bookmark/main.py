@@ -5,13 +5,16 @@ import subprocess
 
 from tables import Bookmark
 
-from qapp.utils import register
 from qapp.plug import PlugApp 
+from qapp.utils import register
 from qapp.widget import LeftRightEdit, InputListStack, InputList
 
 class BookmarkMode(PlugApp):
 
-    def __init__(self, port=None, parent_port=None, config=None):
+    def __init__(self, 
+                 port=None, 
+                 parent_port=None, 
+                 config=None):
 
         super(BookmarkMode, self).__init__(
                  port=port, 
@@ -26,25 +29,31 @@ class BookmarkMode(PlugApp):
         self.ui=InputListStack(item_widget=LeftRightEdit)
 
         self.ui.main.input.setLabel('Bookmark')
-        self.ui.main.list.widgetDataChanged.connect(self.on_contentChanged)
+        self.ui.main.list.widgetDataChanged.connect(
+                self.on_contentChanged)
 
-        self.ui.addWidget(InputList(), 'choose')
-        self.ui.choose.input.setLabel('Choose')
-        self.ui.choose.returnPressed.connect(self.on_chooseConfirm)
+        self.ui.addWidget(InputList(), 'select')
+        self.ui.select.input.setLabel('Select')
+        self.ui.select.returnPressed.connect(
+                self.on_selectConfirm)
 
         self.ui.addWidget(InputList(), 'search')
         self.ui.search.input.setLabel('Search')
         self.ui.search.list.returnPressed.connect(self.open)
-        self.ui.search.input.returnPressed.connect(self.on_searchInputConfirm)
+        self.ui.search.input.returnPressed.connect(
+                self.on_searchInputConfirm)
 
         self.ui.addWidget(InputList(), 'browser')
         self.ui.browser.input.setLabel('Browser')
-        self.ui.browser.returnPressed.connect(self.on_browserConfirm)
+        self.ui.browser.returnPressed.connect(
+                self.on_browserConfirm)
+
+        self.ui.hideWanted.connect(self.deactivate)
+        self.ui.installEventFilter(self)
 
         self.ui.setMaximumSize(600, 700)
         self.ui.setMinimumSize(600, 700)
-        self.ui.setLocation('center')
-        self.ui.installEventFilter(self)
+        self.ui.setCentered(True)
 
     def on_searchInputConfirm(self):
 
@@ -89,11 +98,12 @@ class BookmarkMode(PlugApp):
     def on_browserConfirm(self):
 
         item=self.ui.browser.list.currentItem()
-        if item: self.yankUrl(item.itemData['id'])
+        if item and 'id' in item.itemData: 
+            self.yankUrl(item.itemData['id'])
 
-    def on_chooseConfirm(self): 
+    def on_selectConfirm(self): 
 
-        item=self.ui.choose.list.currentItem()
+        item=self.ui.select.list.currentItem()
         if item: self.chooseUrl(item.itemData['up'])
 
     def chooseUrl(self, url):
@@ -117,7 +127,9 @@ class BookmarkMode(PlugApp):
         self.ui.show(self.ui.main)
 
     @register('b')
-    def bookmark(self): self.chooseUrl(self.activate())
+    def bookmark(self): 
+
+        self.chooseUrl(self.clipboard().text())
 
     @register('s')
     def toggleSearch(self):
@@ -147,22 +159,31 @@ class BookmarkMode(PlugApp):
         tree=asyncio.run(self.manager.get_tree())
         items=[]
         for window in tree:
-            kind=window.ipc_data.get('window_properties', {}).get('class', None)
+            kind=window.ipc_data.get(
+                    'window_properties', {}).get('class', None)
             if kind in ['qutebrowser', 'Google-chrome']:
                 items+=[{'up':window.name, 'id':window.id}]
         self.ui.browser.setList(items)
 
         self.ui.show(self.ui.browser)
 
-    @register('p')
     def activate(self):
 
-        self.ui.show(self.ui.choose)
+        self.activated=True
+        self.paste()
+
+    @register('p')
+    def paste(self):
+
+        self.ui.show(self.ui.select)
         text=self.clipboard().text()
+
         if text:
-            dlist=[{'up': text}]
-            self.ui.choose.setList(dlist)
-            return text
+            dlist=[{'up': text, 'id':text}]
+        else:
+            dlist=[{'up': 'No link in the clipboard'}]
+
+        self.ui.select.list.setList(dlist)
 
     def yankUrl(self, window_id):
 
@@ -171,7 +192,8 @@ class BookmarkMode(PlugApp):
         workspaces=asyncio.run(self.manager.get_workspaces())
         visible=[w for w in workspaces if w.visible]
         window=tree.find_by_id(window_id)
-        kind=window.ipc_data.get('window_properties', {}).get('class', None)
+        kind=window.ipc_data.get(
+                'window_properties', {}).get('class', None)
 
         if kind in ['qutebrowser', 'Google-chrome']:
 
@@ -188,7 +210,7 @@ class BookmarkMode(PlugApp):
                     self.manager.command(f'workspace {v.name}'))
             asyncio.run(focused.command('focus'))
 
-        self.activate()
+        self.paste()
 
 if __name__=='__main__':
     app=BookmarkMode(port=33333)
