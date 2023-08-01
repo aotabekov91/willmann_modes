@@ -1,3 +1,3 @@
 from .main import AIMode 
 
-def get_mode(): return AIMode
+def get_mode_class(): return AIMode

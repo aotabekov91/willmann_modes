@@ -5,7 +5,7 @@ build-backend="setuptools.build_meta"
 
 [project]
 
-name="willmann_modes"
+name="modes"
 version="0.0.1"
 description='Willmann modes'
 dependencies=[

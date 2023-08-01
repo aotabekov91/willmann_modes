@@ -1,3 +1,3 @@
 from .main import ExecuteMode 
 
-def get_mode(): return ExecuteMode
+def get_mode_class(): return ExecuteMode

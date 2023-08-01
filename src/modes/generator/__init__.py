@@ -1,4 +1,3 @@
 from .main import GeneratorMode 
 
-def get_mode():
-    return GeneratorMode
+def get_mode_class(): return GeneratorMode

@@ -1,3 +1,3 @@
 from .main import ApplicationsMode 
 
-def get_mode(): return ApplicationsMode
+def get_mode_class(): return ApplicationsMode
