@@ -1,0 +1,11 @@
+---
+type: intent
+name: KeyboardMode_setLanguage 
+slots:
+  - name: lan 
+    entity: lan 
+utterances:
+  - keyboard [lan](german)
+  - keyboard [lan](english)
+  - keyboard [lan](russian)
+  - keyboard [lan](de)

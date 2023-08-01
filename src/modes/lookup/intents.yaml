@@ -1,0 +1,16 @@
+---
+type: entity
+name: term
+automatically_extensible: yes
+
+---
+type: intent
+name: LookupMode_translate 
+slots:
+  - name: lan
+    entity: term 
+  - name: term
+    entity: term 
+
+utterances:
+  - tranlate [term](term)

@@ -1,0 +1,22 @@
+[build-system]
+
+requires=["setuptools"]
+build-backend="setuptools.build_meta"
+
+[project]
+
+name="willmann_modes"
+version="0.0.1"
+description='Willmann modes'
+dependencies=[
+	"plug==0.0.1",
+	"qapp==0.0.1",
+]
+
+[tools.setuptools.package-data]
+
+"*"=["*"]
+
+[tools.setuptools.packages.find]
+
+where=["src"]

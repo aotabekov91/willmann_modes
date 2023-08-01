@@ -1,3 +1,0 @@
-qapp==0.0.1
-plugin==0.0.1
-tables==0.0.1

@@ -1,0 +1,6 @@
+plyer==2.1.0
+qapp==0.0.1
+plug==0.0.1
+pygobject
+playsound
+lxml
