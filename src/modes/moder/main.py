@@ -3,12 +3,9 @@ from qapp.widget import InputListStack
 
 class Moder(PlugApp):
 
-    def __init__(self, port=None, parent_port=None, config=None):
+    def __init__(self, **kwargs):
 
-        super(Moder, self).__init__(
-                 port=port, 
-                 parent_port=parent_port, 
-                 config=config)
+        super(Moder, self).__init__(**kwargs)
 
         self.setUI()
         self.modes=[]
