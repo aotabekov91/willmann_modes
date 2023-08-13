@@ -5,17 +5,15 @@ from PyQt5.QtWidgets import *
 from plyer import notification
 from ankipulator import Submitter
 
-from qapp.plug import PlugApp
+from qplug import PlugApp
+from qplug.utils import register
+from gizmo.widget import LeftRightEdit, InputListStack, InputList
 
-from qapp.utils import register
-from qapp.widget import LeftRightEdit
-from qapp.widget import InputListStack, InputList
+class Flashcard(PlugApp):
 
-class CardMode(PlugApp):
+    def __init__(self, port=None, parent_port=None, config={}):
 
-    def __init__(self, port=None, parent_port=None, config=None):
-
-        super(CardMode, self).__init__(
+        super(Flashcard, self).__init__(
                  name='Flashcard', 
                  port=port, 
                  parent_port=parent_port, 
@@ -114,8 +112,8 @@ class CardMode(PlugApp):
     @register('c')
     def activate(self, preserve=False):
 
+        super().activate()
         self.ui.main.input.setLabel('Flashcard')
-        self.ui.show(self.ui.main)
         if self.model:
             if not preserve: self.clear()
         else:
@@ -160,6 +158,6 @@ class CardMode(PlugApp):
             self.showDecks()
 
 if __name__=='__main__':
-    app=CardMode(port=33333)
+    app=Flashcard(port=33333)
     app.toggle()
     app.run()

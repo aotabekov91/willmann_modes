@@ -1,7 +1,7 @@
 import os
 import subprocess
 
-from qapp.widget import InputBrowser
+from gizmo.widget import InputBrowser
 
 class Mindmap(InputBrowser):
 

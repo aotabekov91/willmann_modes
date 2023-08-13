@@ -1,13 +1,13 @@
 import subprocess
 from tables import Bookmark, Metadata, Part
 
-from qapp.utils import register
-from qapp.plug import PlugApp
-from qapp.widget import InputListStack, InputList
+from qplug import PlugApp
+from qplug.utils import register
+from gizmo.widget import InputListStack, InputList
 
 class SearchMode(PlugApp):
 
-    def __init__(self, port=None, parent_port=None, config=None):
+    def __init__(self, port=None, parent_port=None, config={}):
 
         super(SearchMode, self).__init__(
                  port=port, 

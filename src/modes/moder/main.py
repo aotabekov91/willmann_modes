@@ -1,5 +1,5 @@
-from qapp.plug import PlugApp
-from qapp.widget import InputListStack
+from qplug import PlugApp
+from gizmo.widget import InputListStack
 
 class Moder(PlugApp):
 

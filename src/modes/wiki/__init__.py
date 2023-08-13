@@ -1,3 +1,3 @@
-from .main import WikiMode 
+from .main import Wiki 
 
-def get_mode_class(): return WikiMode
+def get_mode_class(): return Wiki

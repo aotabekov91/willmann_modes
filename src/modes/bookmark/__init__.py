@@ -1,3 +1,3 @@
-from .main import BookmarkMode
+from .main import Bookmark
 
-def get_mode_class(): return BookmarkMode
+def get_mode_class(): return Bookmark

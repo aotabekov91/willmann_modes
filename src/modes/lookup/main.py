@@ -7,15 +7,15 @@ from plyer import notification
 
 from ankipulator import Submitter
 
-from qapp.utils import register
-from qapp.plug import PlugApp
-from qapp.widget import InputListStack, ListWidget, Icon
+from qplug import PlugApp
+from qplug.utils import register
+from gizmo.widget import InputListStack, ListWidget, Icon
 
 from .translate import en_translation, de_translation
 
 class LookupMode(PlugApp):
 
-    def __init__(self, port=None, parent_port=None, config=None):
+    def __init__(self, port=None, parent_port=None, config={}):
 
         super(LookupMode, self).__init__(
                  port=port, 

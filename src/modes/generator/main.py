@@ -3,15 +3,15 @@ import zmq
 import hashlib
 import playsound
 
-from qapp.utils import register
-from qapp.widget import InputListStack
+from qplug import PlugApp
+from qplug.utils import register
+from gizmo.widget import InputListStack
 
-from qapp.plug import PlugApp
 from tables import Joke, Quote
 
 class GeneratorMode(PlugApp):
 
-    def __init__(self, port=None, parent_port=None, config=None):
+    def __init__(self, port=None, parent_port=None, config={}):
 
         super(GeneratorMode, self).__init__(
                  port=port, 

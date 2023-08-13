@@ -1,0 +1,5 @@
+Settings: 
+  rest: 5
+  work: 25 
+  cycle: 1 
+  sound_path: /home/adam/code/willmann/willmann/modes/task/data/sound.wav

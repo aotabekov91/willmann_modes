@@ -1,23 +1,16 @@
 import subprocess
 
-from PyQt5.QtGui import *
-from PyQt5.QtCore import *
-from PyQt5.QtWidgets import *
-
 from plug import command
+from qplug import PlugApp
+from qplug.utils import register
+from gizmo.widget import InputListStack
 
-from qapp.plug import PlugApp
-from qapp.utils import register
-from qapp.widget import InputListStack
+class Player(PlugApp):
 
-class PlayerMode(PlugApp):
+    def __init__(self, parent_port=None):
 
-    def __init__(self, port=None, parent_port=None, config=None):
-
-        super(PlayerMode, self).__init__(
-                 port=port, 
-                 parent_port=parent_port, 
-                 config=config)
+        super(Player, self).__init__(
+                 parent_port=parent_port)
 
         self.current_player=''
         self.setUI()
@@ -26,8 +19,8 @@ class PlayerMode(PlugApp):
 
         self.ui=InputListStack()
         self.ui.main.input.setLabel('Player')
-        self.ui.hideWanted.connect(self.deactivate)
         self.ui.main.returnPressed.connect(self.confirm)
+        self.ui.hideWanted.connect(self.deactivate)
         self.ui.installEventFilter(self)
 
         self.ui.setMaximumSize(600, 700)
@@ -36,34 +29,32 @@ class PlayerMode(PlugApp):
 
     def getPlayerList(self):
 
-        proc=subprocess.Popen(['playerctl', '-l'], stdout=subprocess.PIPE)
-        players=[p.decode().strip('\n') for p in proc.stdout.readlines()]
+        proc=subprocess.Popen(
+                ['playerctl', '-l'], stdout=subprocess.PIPE)
 
         data=[]
-        proc=subprocess.Popen(
-                ['playerctl', '-a', 'metadata', '--format',
-                 '{{playerName}}__::::__{{artist}}__::::__{{title}}'],
-                stdout=subprocess.PIPE)
+        proc=subprocess.Popen([
+            'playerctl', 
+            '-a', 
+            'metadata', 
+            '--format', 
+            '{{playerName}}__::::__{{artist}}__::::__{{title}}'
+            ], stdout=subprocess.PIPE)
+
         for i, p in enumerate(proc.stdout.readlines()):
+
             p=p.decode().strip('\n').split('__::::__')
             data+=[{'up':p[-1],
-                    'down':'{}{}'.format(p[0], f' - {p[-2]}'*bool(p[-2])),
-                    # 'id':players[i],
+                    'down':'{}{}'.format(
+                        p[0], f' - {p[-2]}'*bool(p[-2])),
                     'id':p[0],
                     }]
         return data
 
     def activate(self): 
 
+        super().activate()
         self.ui.main.setList(self.getPlayerList())
-        self.ui.show()
-
-    def toggle(self):
-
-        if not self.ui.isVisible():
-            self.activate()
-        else:
-            self.deactivate()
 
     def confirm(self): 
 
@@ -71,8 +62,8 @@ class PlayerMode(PlugApp):
             item=self.ui.main.list.currentItem()
             if item and 'id' in item.itemData:
                 self.current_player=item.itemData['id']
-                self.ui.clear()
-                self.ui.hide()
+                self.ui.main.edit.clear()
+                self.deactivate()
     
     def getCurrentPlayer(self):
 
@@ -80,7 +71,7 @@ class PlayerMode(PlugApp):
             return f' -p {self.current_player} '
         return ' '
 
-    @register(Qt.Key_Space)
+    @register(' ')
     @command()
     def togglePlayPause(self):
 
@@ -120,7 +111,7 @@ class PlayerMode(PlugApp):
     def mute(self):
 
         self.setPlayer()
-        return f'pactl set-sink-mute 0 toggle' 
+        return 'pactl set-sink-mute 0 toggle' 
 
     @register('s')
     def setPlayer(self):
@@ -134,6 +125,6 @@ class PlayerMode(PlugApp):
         self.ui.toggleCommands()
 
 if __name__=='__main__':
-    app=PlayerMode(port=33333)
+    app=Player(port=33333)
     app.toggle()
     app.run()

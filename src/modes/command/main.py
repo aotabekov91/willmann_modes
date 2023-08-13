@@ -1,12 +1,12 @@
 import platform
 import subprocess
 
-from qapp.plug import PlugApp
-from qapp.widget import InputListStack 
+from qplug import PlugApp
+from gizmo.widget import InputListStack 
 
 class CommandMode(PlugApp):
 
-    def __init__(self, port=None, parent_port=None, config=None):
+    def __init__(self, port=None, parent_port=None, config={}):
 
         super(CommandMode, self).__init__(
                  name='Commands', 

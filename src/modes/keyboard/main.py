@@ -1,12 +1,12 @@
 import os
 
 from plug import command
-from qapp.plug import PlugApp
-from qapp.widget import InputListStack
+from qplug import PlugApp
+from gizmo.widget import InputListStack
 
 class KeyboardMode(PlugApp):
 
-    def __init__(self, port=None, parent_port=None, config=None):
+    def __init__(self, port=None, parent_port=None, config={}):
 
         super(KeyboardMode, self).__init__(
                  port=port, 

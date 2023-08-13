@@ -1,3 +1,3 @@
-from .main import TranslatorMode 
+from .main import Translator 
 
-def get_mode_class(): return TranslatorMode
+def get_mode_class(): return Translator

@@ -2,25 +2,23 @@ import os
 import asyncio
 import subprocess
 
-import libtmux
+from libtmux import Server
 from i3ipc.aio import Connection
 
-from qapp.plug import PlugApp
-from qapp.widget import InputListStack
+from qplug import PlugApp
+from gizmo.widget import InputListStack
 
-class ApplicationsMode(PlugApp):
+class Applications(PlugApp):
 
-    def __init__(self, port=None, parent_port=None, config=None):
+    def __init__(self, parent_port=None):
 
-        super(ApplicationsMode, self).__init__(
-                 name='Applications', 
-                 port=port, 
-                 parent_port=parent_port, 
-                 config=config)
+        super(Applications, self).__init__(
+                 initiate_stack=False,
+                 parent_port=parent_port,
+                 )
 
-        self.tmux=libtmux.Server()
+        self.tmux=Server()
         self.manager=asyncio.run(Connection().connect())
-
         self.setUI()
 
     def setUI(self):

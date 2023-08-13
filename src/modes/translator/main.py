@@ -1,33 +1,16 @@
-import re
-import urllib.parse
-import urllib.request
-import fake_useragent
-
-from qapp.plug import PlugApp
-from qapp.utils import register
-from qapp.widget import InputListStack
-
 from plug import command
 
-def translate(to_translate, to_language="auto", from_language="auto", wrap_len="80"):
+from qplug import PlugApp
+from qplug.utils import register
+from gizmo.widget import InputListStack
 
-    base_link = "http://translate.google.com/m?tl=%s&sl=%s&q=%s"
-    to_translate = urllib.parse.quote(to_translate)
-    link = base_link % (to_language, from_language, to_translate)
-    ua=fake_useragent.UserAgent()
-    agent={'User-Agent': str(ua.random)}
-    request = urllib.request.Request(link, headers=agent)
-    raw_data = urllib.request.urlopen(request).read()
-    data = raw_data.decode("utf-8")
-    expr = r'class="result-container">(.*?)<'
-    re_result = re.findall(expr, data)
-    if (len(re_result) > 0): return re_result[0]
+from .util import translate
 
-class TranslatorMode(PlugApp):
+class Translator(PlugApp):
 
-    def __init__(self, port=None, parent_port=None, config=None):
+    def __init__(self, port=None, parent_port=None, config={}):
 
-        super(TranslatorMode, self).__init__(
+        super(Translator, self).__init__(
                  port=port, 
                  parent_port=parent_port, 
                  config=config)
@@ -107,6 +90,6 @@ class TranslatorMode(PlugApp):
         self.ui.show()
 
 if __name__=='__main__':
-    app=TranslatorMode(port=33333)
+    app=Translator(port=33333)
     app.toggle()
     app.run()

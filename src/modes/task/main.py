@@ -1,32 +1,19 @@
-import os
-import sys
-import zmq
 import time
-import json
-import random
 import datetime
-import threading
 import playsound
 
-from plyer import notification
+from PyQt5 import QtCore
+
+from qplug import PlugApp
+from qplug.utils import register
 from tables import Pomodoro, Quote
+from gizmo.widget import LeftRightEdit, CommandStack, InputList, ListWidget
 
-from PyQt5.QtGui import *
-from PyQt5.QtCore import *
-from PyQt5.QtWidgets import *
+class Timer(QtCore.QObject):
 
-from qapp.utils import register
-from qapp.widget import LeftRightEdit
-from qapp.widget import CommandStack, InputList, ListWidget
-
-from plug import command
-from qapp.plug import PlugApp
-
-class Timer(QObject):
-
-    changed=pyqtSignal()
-    workFinished=pyqtSignal()
-    restFinished=pyqtSignal()
+    changed=QtCore.pyqtSignal()
+    workFinished=QtCore.pyqtSignal()
+    restFinished=QtCore.pyqtSignal()
 
     def __init__(self, parent):
 
@@ -122,7 +109,7 @@ class Timer(QObject):
 
 class TaskMode(PlugApp):
 
-    def __init__(self, port=None, parent_port=None, config=None):
+    def __init__(self, port=None, parent_port=None, config={}):
 
         super(TaskMode, self).__init__(
                  port=port, 
@@ -298,7 +285,7 @@ class TaskMode(PlugApp):
 
     def setTimer(self):
 
-        self.timer_thread=QThread()
+        self.timer_thread=QtCore.QThread()
         self.timer=Timer(self)
         self.timer.moveToThread(self.timer_thread)
 
@@ -309,7 +296,7 @@ class TaskMode(PlugApp):
         self.timer.restFinished.connect(self.updateQuote)
 
         self.timer_thread.started.connect(self.timer.run)
-        QTimer.singleShot(0, self.timer_thread.start)
+        QtCore.QTimer.singleShot(0, self.timer_thread.start)
 
     def getTasks(self):
 

@@ -1,2 +1,1 @@
-qapp==0.0.1
-plug==0.0.1
+plug[qplug]==0.0.1

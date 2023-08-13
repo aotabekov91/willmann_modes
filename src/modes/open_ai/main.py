@@ -4,18 +4,15 @@ import time
 
 import openai
 
-from PyQt5.QtGui import *
-from PyQt5.QtCore import *
-from PyQt5.QtWidgets import *
+from PyQt5 import QtCore 
 
-from qapp.plug import PlugApp
-
-from qapp.utils import register
-from qapp.widget import InputBrowserStack 
+from qplug import PlugApp
+from qplug.utils import register
+from gizmo.widget import InputBrowserStack 
 
 class AIMode(PlugApp):
 
-    def __init__(self, port=None, parent_port=None, config=None):
+    def __init__(self, port=None, parent_port=None, config={}):
 
         super(AIMode, self).__init__(
                  port=port, 
@@ -59,13 +56,13 @@ class AIMode(PlugApp):
     def setAnswerer(self):
 
         self.answerer=AIAnswer(self)
-        self.answer_thread=QThread()
+        self.answer_thread=QtCore.QThread()
         self.answerer.moveToThread(self.answer_thread)
         self.answerer.answered.connect(self.update)
         self.answer_thread.started.connect(self.answerer.loop)
-        QTimer.singleShot(0, self.answer_thread.start)
+        QtCore.QTimer.singleShot(0, self.answer_thread.start)
 
-    @pyqtSlot(str, str)
+    @QtCore.pyqtSlot(str, str)
     def update(self, question, answer):
 
         self.answer=re.sub(r'^\n*', '', answer)
@@ -96,9 +93,9 @@ class AIMode(PlugApp):
         '''.format(answer)
         return html
 
-class AIAnswer(QObject):
+class AIAnswer(QtCore.QObject):
     
-    answered=pyqtSignal(str, str)
+    answered=QtCore.pyqtSignal(str, str)
     def __init__(self, parent):
 
         super(AIAnswer, self).__init__()

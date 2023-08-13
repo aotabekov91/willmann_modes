@@ -1,0 +1,6 @@
+System: 
+  activate: Alt+d
+
+Settings: 
+  port: 43110 
+  generator_port: 43111

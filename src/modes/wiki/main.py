@@ -6,24 +6,19 @@ import fileinput
 import subprocess
 from lxml import etree
 
-from PyQt5.QtGui import *
-from PyQt5.QtCore import *
-from PyQt5.QtWidgets import *
-
+from qplug import PlugApp 
+from qplug.utils import register
 from tables import WikiIndex
-
-from qapp.plug import PlugApp 
-from qapp.utils import register
-from qapp.widget import InputListStack, InputList
+from gizmo.widget import InputListStack, InputList
 
 from .network import Network
 from .mindmap import Mindmap
 
-class WikiMode(PlugApp):
+class Wiki(PlugApp):
 
-    def __init__(self, port=None, parent_port=None, config=None):
+    def __init__(self, port=None, parent_port=None, config={}):
 
-        super(WikiMode, self).__init__(
+        super(Wiki, self).__init__(
                  port=port, 
                  parent_port=parent_port, 
                  config=config)
@@ -158,7 +153,7 @@ class WikiMode(PlugApp):
             line=item.itemData.get('line', '0')
             path=item.itemData['path']
             os_cmd=['kitty', '--class', 'floating', 'vim', f'+{line}', path]
-            p=subprocess.Popen(os_cmd)
+            subprocess.Popen(os_cmd)
             self.ui.hide()
 
     @register('s')
@@ -281,6 +276,6 @@ class WikiMode(PlugApp):
         self.ui.todos.setList(self.todos)
 
 if __name__=='__main__':
-    app=WikiMode(port=8234)
+    app=Wiki(port=8234)
     app.toggle()
     app.run()

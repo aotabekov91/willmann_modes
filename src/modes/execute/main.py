@@ -1,12 +1,12 @@
 import os
 
-from qapp.utils import register
-from qapp.plug import PlugApp
-from qapp.widget import InputListStack
+from qplug import PlugApp
+from qplug.utils import register
+from gizmo.widget import InputListStack
 
 class ExecuteMode(PlugApp):
 
-    def __init__(self, port=None, parent_port=None, config=None):
+    def __init__(self, port=None, parent_port=None, config={}):
 
         super(ExecuteMode, self).__init__(
                  name='Execute', 

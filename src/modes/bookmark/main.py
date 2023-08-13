@@ -5,18 +5,18 @@ import subprocess
 
 from tables import Bookmark
 
-from qapp.plug import PlugApp 
-from qapp.utils import register
-from qapp.widget import LeftRightEdit, InputListStack, InputList
+from qplug import PlugApp 
+from qplug.utils import register
+from gizmo.widget import LeftRightEdit, InputListStack, InputList
 
-class BookmarkMode(PlugApp):
+class Bookmark(PlugApp):
 
     def __init__(self, 
                  port=None, 
                  parent_port=None, 
-                 config=None):
+                 config={}):
 
-        super(BookmarkMode, self).__init__(
+        super(Bookmark, self).__init__(
                  port=port, 
                  parent_port=parent_port, 
                  config=config)
@@ -213,6 +213,6 @@ class BookmarkMode(PlugApp):
         self.paste()
 
 if __name__=='__main__':
-    app=BookmarkMode(port=33333)
+    app=Bookmark(port=33333)
     app.toggle()
     app.run()

@@ -1,3 +1,3 @@
-from .main import PlayerMode 
+from .main import Player
 
-def get_mode_class(): return PlayerMode
+def get_mode_class(): return Player

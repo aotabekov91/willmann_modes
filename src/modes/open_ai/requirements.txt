@@ -1,3 +1,2 @@
-qapp==0.0.1
-plug==0.0.1
 openai==0.27.7
+plug[qplug]==0.0.1
